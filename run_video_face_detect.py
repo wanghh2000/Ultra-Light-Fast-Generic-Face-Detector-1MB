@@ -11,8 +11,7 @@ import time
 
 from vision.ssd.config.fd_config import define_img_size
 
-parser = argparse.ArgumentParser(
-    description='detect_video')
+parser = argparse.ArgumentParser(description='detect_video')
 
 parser.add_argument('--net_type', default="RFB", type=str, help='The network architecture ,optional: RFB (higher precision) or slim (faster)')
 parser.add_argument('--input_size', default=480, type=int, help='define network input size,default optional value 128/160/320/480/640/1280')

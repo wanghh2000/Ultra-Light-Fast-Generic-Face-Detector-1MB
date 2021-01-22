@@ -9,21 +9,14 @@ import cv2
 
 from vision.ssd.config.fd_config import define_img_size
 
-parser = argparse.ArgumentParser(
-    description='detect_imgs')
+parser = argparse.ArgumentParser(description='detect_imgs')
 
-parser.add_argument('--net_type', default="RFB", type=str,
-                    help='The network architecture ,optional: RFB (higher precision) or slim (faster)')
-parser.add_argument('--input_size', default=640, type=int,
-                    help='define network input size,default optional value 128/160/320/480/640/1280')
-parser.add_argument('--threshold', default=0.6, type=float,
-                    help='score threshold')
-parser.add_argument('--candidate_size', default=1500, type=int,
-                    help='nms candidate size')
-parser.add_argument('--path', default="imgs", type=str,
-                    help='imgs dir')
-parser.add_argument('--test_device', default="cuda:0", type=str,
-                    help='cuda:0 or cpu')
+parser.add_argument('--net_type', default="RFB", type=str, help='The network architecture ,optional: RFB (higher precision) or slim (faster)')
+parser.add_argument('--input_size', default=640, type=int, help='define network input size,default optional value 128/160/320/480/640/1280')
+parser.add_argument('--threshold', default=0.6, type=float, help='score threshold')
+parser.add_argument('--candidate_size', default=1500, type=int, help='nms candidate size')
+parser.add_argument('--path', default="imgs", type=str, help='imgs dir')
+parser.add_argument('--test_device', default="cuda:0", type=str, help='cuda:0 or cpu')
 args = parser.parse_args()
 define_img_size(args.input_size)  # must put define_img_size() before 'import create_mb_tiny_fd, create_mb_tiny_fd_predictor'
 
@@ -67,6 +60,10 @@ for file_path in listdir:
         label = f"{probs[i]:.2f}"
         # cv2.putText(orig_image, label, (box[0], box[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
     cv2.putText(orig_image, str(boxes.size(0)), (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-    cv2.imwrite(os.path.join(result_path, file_path), orig_image)
+    #cv2.imwrite(os.path.join(result_path, file_path), orig_image)
+    cv2.imshow('image', orig_image)
+    if cv2.waitKey(0) & 0xFF == ord('q'):
+        continue
     print(f"Found {len(probs)} faces. The output image is {result_path}")
+    
 print(sum)
